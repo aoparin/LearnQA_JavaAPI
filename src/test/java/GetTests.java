@@ -67,4 +67,39 @@ public class GetTests {
             }
         }
     }
+
+    @Test
+    public void getLongTimeJobTest() throws InterruptedException {
+
+        String status;
+
+        JsonPath responseWithoutParam = RestAssured
+                .given()
+                .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                .jsonPath();
+        Integer seconds = responseWithoutParam.get("seconds");
+        String token = responseWithoutParam.get("token");
+
+        JsonPath responseWithParam = RestAssured
+                .given()
+                .queryParam("token", token)
+                .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                .jsonPath();
+        status = responseWithParam.get("status");
+
+        if (status.equals("Job is NOT ready")) {
+            Thread.sleep(seconds * 1000);
+            JsonPath responseWithParamAfterWait = RestAssured
+                    .given()
+                    .queryParam("token", token)
+                    .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                    .jsonPath();
+            status = responseWithParamAfterWait.get("status");
+
+         if (status.equals("Job is ready")){
+             String result = responseWithParamAfterWait.get("result");
+             System.out.println("Status: " + status + "\nResult: " + result);
+            }
+        }
+    }
 }
