@@ -21,4 +21,16 @@ public class GetTests {
         String secondMessage = response.get("messages.message[1]");
         System.out.println(secondMessage);
     }
+
+    @Test
+    public void getRedirectHeaderTest(){
+        Response response = RestAssured
+                .given()
+                .redirects()
+                .follow(false)
+                .get("https://playground.learnqa.ru/api/long_redirect")
+                .andReturn();
+        String locationHeaders = response.getHeader("Location");
+        System.out.println(locationHeaders);
+    }
 }
