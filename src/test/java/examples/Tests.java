@@ -2,11 +2,13 @@ package examples;
 
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import java.util.HashMap;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Tests {
 
@@ -27,5 +29,11 @@ public class Tests {
         String answer = response.getString("answer");
         String expectedName = (name.length() > 0) ? name : "someone";
         assertEquals("Hello, " + expectedName, answer, "The answer is ont expected");
+    }
+
+    @Test
+    public void stringLengthTest(){
+        String text = "Test text";
+        assertTrue(text.length() > 15, "String length should be greater than 15");
     }
 }
