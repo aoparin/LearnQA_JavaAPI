@@ -2,6 +2,7 @@ package examples;
 
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -86,5 +87,11 @@ public class Tests {
             assertEquals("No", response.getString("browser"), "UserAgent = " + userAgent + "\nbrowser value is not match");
             assertEquals("iPhone", response.getString("device"), "UserAgent = " + userAgent + "\ndevice value is not match");
         }
+    }
+
+    @Test
+    public void homeworkHeaderTest(){
+        Response response = RestAssured.given().get("https://playground.learnqa.ru/api/homework_header").andReturn();
+        assertEquals("Some secret value", response.getHeader("X-Secret-Homework-Header"), "Value does not match expected");
     }
 }
