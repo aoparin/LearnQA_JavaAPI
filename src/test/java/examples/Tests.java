@@ -94,4 +94,10 @@ public class Tests {
         Response response = RestAssured.given().get("https://playground.learnqa.ru/api/homework_header").andReturn();
         assertEquals("Some secret value", response.getHeader("X-Secret-Homework-Header"), "Value does not match expected");
     }
+
+    @Test
+    public void homeworkCookieTest(){
+        Response response = RestAssured.given().get("https://playground.learnqa.ru/api/homework_cookie").andReturn();
+        assertEquals("hw_value", response.getCookie("HomeWork"), "Value does not match expected");
+    }
 }
